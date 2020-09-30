@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Fizjoterapeta Dashboard</title>
+</head>
+<body>
+<div id="navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/fizjoterapeuta/logout}">Logout</a></li>
+        <li>
+        </li>
+    </ul>
+</div>
+<form action="/fizjoterapeuta/konto">
+    <div class="form-group">
+        <label for="email">Enter Employee Email :</label>
+        <input class="form-control" id="email" type="text" name="email"/>
+    </div>
+    <input type="submit" value="Find Fizjoterapeuta By Email" class="btn btn-primary"/>
+</form>
+</body>
+</html>
