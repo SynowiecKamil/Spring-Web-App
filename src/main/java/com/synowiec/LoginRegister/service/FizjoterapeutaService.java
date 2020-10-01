@@ -14,7 +14,9 @@ public interface FizjoterapeutaService extends UserDetailsService {
 
     Fizjoterapeuta saveFizjo(FizjoRegistrationDto registration);
 
-    Fizjoterapeuta editFizjo(Fizjoterapeuta fizjoterapeuta);
+    Fizjoterapeuta get(long id);
+
+    void updateFizjoterapeuta(Fizjoterapeuta fizjoterapeuta);
 
     List<Fizjoterapeuta> listAll();
 }

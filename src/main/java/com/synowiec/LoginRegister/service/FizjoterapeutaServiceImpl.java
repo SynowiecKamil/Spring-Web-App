@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -49,8 +50,13 @@ public class FizjoterapeutaServiceImpl implements FizjoterapeutaService {
         return fizjoRepository.save(fizjo);
     }
 
-    public Fizjoterapeuta editFizjo(Fizjoterapeuta fizjoterapeuta){
-        return fizjoRepository.save(fizjoterapeuta);
+    public Fizjoterapeuta get(long id){
+        return fizjoRepository.findById(id).get();
+    }
+
+    @Transactional
+    public void updateFizjoterapeuta(Fizjoterapeuta fizjoterapeuta) {
+        fizjoRepository.updateFizjo(fizjoterapeuta.getId(), fizjoterapeuta.getFirstName(), fizjoterapeuta.getLastName());
     }
 
     @Override

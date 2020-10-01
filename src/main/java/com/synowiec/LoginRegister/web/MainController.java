@@ -70,19 +70,19 @@ public class MainController {
         return "KontoFizjoterapeuta";
     }
 
-    @GetMapping("/fizjoterapeuta/konto/edytuj")
-    public ModelAndView showEditFizjoterapeutaPage(Authentication authentication) {
+    @RequestMapping("/fizjoterapeuta/konto/edytuj/{id}")
+    public ModelAndView showEditFizjoterapeutaPage(@PathVariable(name = "id") long id) {
         ModelAndView mav = new ModelAndView("FizjoterapeutaEdytuj");
-        Fizjoterapeuta fizjoterapeuta = fizjoterapeutaService.findByEmail(authentication.getName());
+        Fizjoterapeuta fizjoterapeuta = fizjoterapeutaService.get(id);
         mav.addObject("fizjoterapeuta", fizjoterapeuta);
 
         return mav;
     }
     @RequestMapping(value = "/FizjoterapeutaEdytuj", method = RequestMethod.POST)
-    public String editFizjoterapeuta(@ModelAttribute("fizjoterapeuta") Fizjoterapeuta fizjoterapeuta) {
-        fizjoterapeutaService.editFizjo(fizjoterapeuta);
+    public String editFizjoterapeuta(@ModelAttribute("fizjoterapeuta")@RequestBody Fizjoterapeuta fizjoterapeuta) {
+        fizjoterapeutaService.updateFizjoterapeuta(fizjoterapeuta);
 
-        return "redirect:/fizjoterapeuta/konto";
+        return "FizjoterapeutaDashboard";
     }
 
 
