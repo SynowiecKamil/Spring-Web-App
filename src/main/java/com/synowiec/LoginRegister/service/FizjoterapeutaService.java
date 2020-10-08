@@ -1,6 +1,5 @@
 package com.synowiec.LoginRegister.service;
 
-import com.synowiec.LoginRegister.constraint.FieldMatch;
 import com.synowiec.LoginRegister.model.Fizjoterapeuta;
 import com.synowiec.LoginRegister.web.dto.FizjoRegistrationDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,4 +18,6 @@ public interface FizjoterapeutaService extends UserDetailsService {
     void updateFizjoterapeuta(Fizjoterapeuta fizjoterapeuta);
 
     List<Fizjoterapeuta> listAll();
+
+    List<Fizjoterapeuta> listAll(String keyword);
 }

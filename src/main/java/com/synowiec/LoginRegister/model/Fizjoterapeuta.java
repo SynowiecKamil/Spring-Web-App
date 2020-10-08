@@ -94,7 +94,7 @@ public class Fizjoterapeuta {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Pacjent{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

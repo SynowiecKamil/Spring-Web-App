@@ -32,7 +32,7 @@ public class FizjoRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("fizjo") @Valid FizjoRegistrationDto fizjoDto,
+    public String registerPacjentAccount(@ModelAttribute("fizjo") @Valid FizjoRegistrationDto fizjoDto,
                                       BindingResult result){
 
         Fizjoterapeuta existing = fizjoService.findByEmail(fizjoDto.getEmail());

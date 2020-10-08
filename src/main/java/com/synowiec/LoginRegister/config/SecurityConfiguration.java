@@ -1,7 +1,7 @@
 package com.synowiec.LoginRegister.config;
 
 import com.synowiec.LoginRegister.service.FizjoterapeutaService;
-import com.synowiec.LoginRegister.service.UserService;
+import com.synowiec.LoginRegister.service.PacjentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ public class SecurityConfiguration{
     @Order(1)
     public static class PacjentConfigAdapter extends WebSecurityConfigurerAdapter{
         @Autowired
-        private UserService userService;
+        private PacjentService pacjentService;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -79,7 +79,7 @@ public class SecurityConfiguration{
         @Bean
         public DaoAuthenticationProvider authenticationProvider() {
             DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-            auth.setUserDetailsService(userService);
+            auth.setUserDetailsService(pacjentService);
             auth.setPasswordEncoder(passwordEncoder());
             return auth;
         }
@@ -113,8 +113,8 @@ public class SecurityConfiguration{
                     .antMatchers("/fizjoterapeuta/**").hasAuthority("Fizjoterapeuta")
                     .and()
                     .formLogin()
-                    .loginPage("/fizjoterapeuta/FizjoterapeutaLogin")
-                    .loginProcessingUrl("/fizjoterapeuta/FizjoterapeutaLogin")
+                    .loginPage("/fizjoterapeuta/login")
+                    .loginProcessingUrl("/fizjoterapeuta/login")
                     .defaultSuccessUrl("/fizjoterapeuta/dashboard",true)
                     .permitAll()
                     .and()
@@ -127,7 +127,7 @@ public class SecurityConfiguration{
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/fizjoterapeuta/logout"))
-                    .logoutSuccessUrl("/fizjoterapeuta/FizjoterapeutaLogin?logout")
+                    .logoutSuccessUrl("/fizjoterapeuta/login?logout")
                     .permitAll()
                     .and()
                     .csrf().disable();

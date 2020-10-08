@@ -5,7 +5,7 @@ import java.util.Collection;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User {
+public class Pacjent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,24 +18,24 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "users_roles",
+            name = "pacjents_roles",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
+                    name = "pacjent_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    public User() {
+    public Pacjent() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public Pacjent(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+    public Pacjent(String firstName, String lastName, String email, String password, Collection<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -93,7 +93,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Pacjent{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

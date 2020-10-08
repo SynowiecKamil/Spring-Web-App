@@ -2,9 +2,9 @@ package com.synowiec.LoginRegister.web;
 
 import javax.validation.Valid;
 
-import com.synowiec.LoginRegister.model.User;
-import com.synowiec.LoginRegister.service.UserService;
-import com.synowiec.LoginRegister.web.dto.UserRegistrationDto;
+import com.synowiec.LoginRegister.model.Pacjent;
+import com.synowiec.LoginRegister.service.PacjentService;
+import com.synowiec.LoginRegister.web.dto.PacjentRegistrationDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/registration")
-public class UserRegistrationController {
+public class PacjentRegistrationController {
 
     @Autowired
-    private UserService userService;
+    private PacjentService pacjentService;
 
-    @ModelAttribute("user")
-    public UserRegistrationDto userRegistrationDto() {
-        return new UserRegistrationDto();
+    @ModelAttribute("pacjent")
+    public PacjentRegistrationDto pacjentRegistrationDto() {
+        return new PacjentRegistrationDto();
     }
 
     @GetMapping
@@ -33,10 +33,10 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
+    public String registerPacjentAccount(@ModelAttribute("pacjent") @Valid PacjentRegistrationDto pacjentDto,
                                       BindingResult result){
 
-        User existing = userService.findByEmail(userDto.getEmail());
+        Pacjent existing = pacjentService.findByEmail(pacjentDto.getEmail());
         if (existing != null){
             result.rejectValue("email", null, "There is already an account registered with that email");
         }
@@ -45,7 +45,7 @@ public class UserRegistrationController {
             return "registration";
         }
 
-        userService.save(userDto);
+        pacjentService.save(pacjentDto);
         return "redirect:/registration?success";
     }
 

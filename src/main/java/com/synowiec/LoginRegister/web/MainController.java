@@ -1,11 +1,12 @@
 package com.synowiec.LoginRegister.web;
 
 import com.synowiec.LoginRegister.model.Fizjoterapeuta;
-import com.synowiec.LoginRegister.model.User;
+import com.synowiec.LoginRegister.model.Pacjent;
 import com.synowiec.LoginRegister.repository.FizjoterapeutaRepository;
 import com.synowiec.LoginRegister.service.FizjoterapeutaService;
-import com.synowiec.LoginRegister.service.UserService;
+import com.synowiec.LoginRegister.service.PacjentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class MainController {
     @Autowired
     FizjoterapeutaService fizjoterapeutaService;
     @Autowired
-    UserService pacjentService;
+    PacjentService pacjentService;
 
     @GetMapping("/index")
     public String root() {
@@ -31,29 +32,45 @@ public class MainController {
 
     @GetMapping("/pacjent/login")
     public String login(Model model) {
-        return "login";
+        return "PacjentLogin";
     }
 
     @GetMapping("/pacjent/dashboard")
-    public String userIndex() {
+    public String pacjentIndex() {
         return "PacjentDashboard";
     }
 
     @GetMapping("/pacjent/konto")
     public String getPacjent(Model model, Authentication authentication){
-        User getPacjent = pacjentService.findByEmail(authentication.getName());
+        Pacjent getPacjent = pacjentService.findByEmail(authentication.getName());
         model.addAttribute("getPacjent", getPacjent);
         return "KontoPacjent";
     }
 
+    @RequestMapping("/pacjent/konto/edytuj/{id}")
+    public ModelAndView showEditPacjentPage(@PathVariable(name = "id") long id) {
+        ModelAndView mav = new ModelAndView("PacjentEdytuj");
+        Pacjent pacjent = pacjentService.get(id);
+        mav.addObject("pacjent", pacjent);
+        return mav;
+    }
+
+    @RequestMapping(value = "/PacjentEdytuj", method = RequestMethod.POST)
+    public String editPacjent(@ModelAttribute("pacjent")@RequestBody Pacjent pacjent) {
+        pacjentService.updatePacjent(pacjent);
+        return "PacjentDashboard";
+    }
+
     @GetMapping("/pacjent/wyszukaj")
-    public String PacjentWyszukaj(Model model){
-        List<Fizjoterapeuta> listFizjoterapeuta = fizjoterapeutaService.listAll();
+    public String PacjentWyszukaj(Model model, @Param("keyword") String keyword){
+        List<Fizjoterapeuta> listFizjoterapeuta = fizjoterapeutaService.listAll(keyword);
         model.addAttribute("listFizjoterapeuta", listFizjoterapeuta);
+        model.addAttribute("keyword", keyword);
         return "PacjentWyszukaj";
     }
 
-    @GetMapping("/fizjoterapeuta/FizjoterapeutaLogin")
+
+    @GetMapping("/fizjoterapeuta/login")
     public String FizjoterapeutaLogin(Model model) {
         return "FizjoterapeutaLogin";
     }
@@ -75,13 +92,12 @@ public class MainController {
         ModelAndView mav = new ModelAndView("FizjoterapeutaEdytuj");
         Fizjoterapeuta fizjoterapeuta = fizjoterapeutaService.get(id);
         mav.addObject("fizjoterapeuta", fizjoterapeuta);
-
         return mav;
     }
+
     @RequestMapping(value = "/FizjoterapeutaEdytuj", method = RequestMethod.POST)
     public String editFizjoterapeuta(@ModelAttribute("fizjoterapeuta")@RequestBody Fizjoterapeuta fizjoterapeuta) {
         fizjoterapeutaService.updateFizjoterapeuta(fizjoterapeuta);
-
         return "FizjoterapeutaDashboard";
     }
 

@@ -5,7 +5,6 @@ import com.synowiec.LoginRegister.model.Role;
 import com.synowiec.LoginRegister.repository.FizjoterapeutaRepository;
 import com.synowiec.LoginRegister.web.dto.FizjoRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +39,13 @@ public class FizjoterapeutaServiceImpl implements FizjoterapeutaService {
         return fizjoRepository.findAll();
     }
 
+    public List<Fizjoterapeuta> listAll(String keyword) {
+        if (keyword != null) {
+            return fizjoRepository.searchFizjo(keyword);
+        }
+        return fizjoRepository.findAll();
+    }
+
     public Fizjoterapeuta saveFizjo(FizjoRegistrationDto registration){
         Fizjoterapeuta fizjo = new Fizjoterapeuta();
         fizjo.setFirstName(registration.getFirstName());
@@ -64,7 +70,7 @@ public class FizjoterapeutaServiceImpl implements FizjoterapeutaService {
         this.email = email;
         Fizjoterapeuta fizjo = fizjoRepository.findByEmail(email);
         if (fizjo == null){
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Invalid pacjentname or password.");
         }
         return new org.springframework.security.core.userdetails.User(fizjo.getEmail(),
                 fizjo.getPassword(),
