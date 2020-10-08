@@ -4,7 +4,7 @@ Projekt aplikacji webowej Java Spring
 
 Wykorzytane technologie:
 
-Spring MVC, Spring Security, Thymeleaf, Maven, MYSQL Connector
+Spring MVC, Spring Security, Hibernate, Thymeleaf, Maven, MYSQL Connector
 
 Działanie aplikacji:
 
