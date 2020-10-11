@@ -20,4 +20,5 @@ public interface FizjoterapeutaService extends UserDetailsService {
     List<Fizjoterapeuta> listAll();
 
     List<Fizjoterapeuta> listAll(String keyword);
+
 }

@@ -38,7 +38,7 @@ public class PacjentRegistrationController {
 
         Pacjent existing = pacjentService.findByEmail(pacjentDto.getEmail());
         if (existing != null){
-            result.rejectValue("email", null, "There is already an account registered with that email");
+            result.rejectValue("email", null, "Isntnieje już użytkownik o tym adresie email");
         }
 
         if (result.hasErrors()){

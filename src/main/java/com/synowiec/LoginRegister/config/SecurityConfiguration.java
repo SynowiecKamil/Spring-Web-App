@@ -38,9 +38,11 @@ public class SecurityConfiguration{
                             "/FizjoterapeutaLogin**",
                             "/FizjoterapeutaRegister**",
                             "/index**",
-                            "/js/**",
-                            "/css/**",
-                            "/img/**",
+                            "/static/js/**",
+                            "/static/css/**",
+                            "/static/images/**",
+                            "/static/vendor/**",
+                            "/static/fonts/**",
                             "/webjars/**").permitAll()
                     .antMatchers("/pacjent/**").hasAuthority("Pacjent")
                     .anyRequest().authenticated()
@@ -106,9 +108,11 @@ public class SecurityConfiguration{
                             "/login**",
                             "/registration**",
                             "/index**",
-                            "/js/**",
-                            "/css/**",
-                            "/img/**",
+                            "/static/js/**",
+                            "/static/css/**",
+                            "/static/images/**",
+                            "/static/vendor/**",
+                            "/static/fonts/**",
                             "/webjars/**").permitAll()
                     .antMatchers("/fizjoterapeuta/**").hasAuthority("Fizjoterapeuta")
                     .and()
