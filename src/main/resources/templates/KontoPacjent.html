@@ -1,38 +1,83 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="utf-8"/>
-    <title>Pacjent</title>
+    <title>Konto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <base href="/">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebarStyle.css">
 </head>
 <body>
-<div align="center">
-    <h1>Twoje konto</h1>
-    <br/><br/>
-    <table border="1" cellpadding="10">
-        <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="pacjent : ${getPacjent}">
-            <td th:text="${pacjent.id}">ID</td>
-            <td th:text="${pacjent.firstName}">First Name</td>
-            <td th:text="${pacjent.lastName}">Last Name</td>
-            <td th:text="${pacjent.email}">EMail</td>
 
-                        <td>
-                            <a th:href="@{'/pacjent/konto/edytuj/' + ${pacjent.id}}">Edytuj</a>
-            <!--                &nbsp;&nbsp;&nbsp;-->
-            <!--                <a th:href="/@{'/delete/' + ${product.id}}">Delete</a>-->
-            <!--            </td>-->
-        </tr>
-        </tbody>
-    </table>
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only" >Toggle Menu</span>
+            </button>
+        </div>
+        <h1><a href="index.html" class="logo"></a></h1>
+        <ul class="list-unstyled components mb-5">
+            <li class="active">
+                <a href="#"><span class="fa fa-home mr-3"></span> Homepage</a>
+            </li>
+            <li>
+                <a th:href="@{/pacjent/dashboard}"><span class="fa fa-user mr-3"></span> Dashboard</a>
+            </li>
+            <li>
+                <a th:href="@{/pacjent/konto}"><span class="fa fa-sticky-note mr-3"></span>Moje konto</a>
+            </li>
+            <li>
+                <a th:href="@{/pacjent/wyszukaj}"><span class="fa fa-sticky-note mr-3"></span>Znajdz fizjoterapeute</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/pacjent/logout}"><span class="fa fa-sticky-note mr-3"></span> Wyloguj</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+    <div align="center">
+        <h1>Twoje konto</h1>
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pacjent : ${getPacjent}">
+                <td th:text="${pacjent.id}">ID</td>
+                <td th:text="${pacjent.firstName}">First Name</td>
+                <td th:text="${pacjent.lastName}">Last Name</td>
+                <td th:text="${pacjent.email}">EMail</td>
+
+                <td>
+                    <a th:href="@{'/pacjent/konto/edytuj/' + ${pacjent.id}}">Edytuj</a>
+                    <!--                &nbsp;&nbsp;&nbsp;-->
+                    <!--                <a th:href="/@{'/delete/' + ${product.id}}">Delete</a>-->
+                    <!--            </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
 </div>
+
+<script src="js/sidebar/jquery.min.js"></script>
+<script src="js/sidebar/popper.js"></script>
+<script src="js/sidebar/bootstrap.min.js"></script>
+<script src="js/sidebar/main.js"></script>
 </body>
 </html>
