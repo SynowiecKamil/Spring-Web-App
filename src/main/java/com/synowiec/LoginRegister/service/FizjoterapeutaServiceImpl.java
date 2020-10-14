@@ -65,6 +65,7 @@ public class FizjoterapeutaServiceImpl implements FizjoterapeutaService {
         fizjoRepository.updateFizjo(fizjoterapeuta.getId(), fizjoterapeuta.getFirstName(), fizjoterapeuta.getLastName());
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         this.email = email;
@@ -77,7 +78,8 @@ public class FizjoterapeutaServiceImpl implements FizjoterapeutaService {
                 mapRolesToAuthorities(fizjo.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    @Transactional
+    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

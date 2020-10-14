@@ -47,10 +47,13 @@ public class PacjentServiceImpl implements PacjentService {
     public Pacjent get(long id){
         return pacjentRepository.findById(id).get();
     }
+    
     @Transactional
     public void updatePacjent(Pacjent pacjent) {
         pacjentRepository.updatePacjent(pacjent.getId(), pacjent.getFirstName(), pacjent.getLastName());
     }
+
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         this.email = email;
@@ -63,7 +66,8 @@ public class PacjentServiceImpl implements PacjentService {
                 mapRolesToAuthorities(pacjent.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    @Transactional
+    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

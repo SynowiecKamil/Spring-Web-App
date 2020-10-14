@@ -17,6 +17,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.transaction.Transactional;
 
 
 @EnableWebSecurity
@@ -73,10 +74,6 @@ public class SecurityConfiguration{
             return new BCryptPasswordEncoder();
         }
 
-        @Bean
-        public AuthenticationEntryPoint loginUrlauthenticationEntryPoint2(){
-            return new LoginUrlAuthenticationEntryPoint("/login");
-        }
 
         @Bean
         public DaoAuthenticationProvider authenticationProvider() {
@@ -138,14 +135,10 @@ public class SecurityConfiguration{
         }
 
         @Bean
-        public AuthenticationEntryPoint loginUrlauthenticationEntryPoint(){
-            return new LoginUrlAuthenticationEntryPoint("/FizjoterapeutaLogin");
-        }
-
-        @Bean
         public BCryptPasswordEncoder fizjoPasswordEncoder(){
             return new BCryptPasswordEncoder();
         }
+
 
         @Bean
         public DaoAuthenticationProvider fizjoAuthenticationProvider(){
@@ -154,6 +147,7 @@ public class SecurityConfiguration{
             auth.setPasswordEncoder(fizjoPasswordEncoder());
             return auth;
         }
+
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {

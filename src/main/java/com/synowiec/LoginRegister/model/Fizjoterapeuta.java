@@ -1,7 +1,11 @@
 package com.synowiec.LoginRegister.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -16,7 +20,7 @@ public class Fizjoterapeuta {
     private String email;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "fizjoterapeuta_roles",
             joinColumns = @JoinColumn(
@@ -24,6 +28,10 @@ public class Fizjoterapeuta {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fizjoterapeuta")
+    private Set<Zabieg> zabieg;
+
 
     public Fizjoterapeuta() {
     }
@@ -91,6 +99,13 @@ public class Fizjoterapeuta {
         this.roles = roles;
     }
 
+    public Set<Zabieg> getZabieg() {
+        return zabieg;
+    }
+
+    public void setZabieg(Set<Zabieg> zabieg) {
+        this.zabieg = zabieg;
+    }
 
     @Override
     public String toString() {
@@ -100,7 +115,8 @@ public class Fizjoterapeuta {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + "*********" + '\'' +
-                ", roles=" + roles +
+                ", roles=" + roles + '\'' +
+                ", zabieg=" + zabieg +
                 '}';
     }
 }
