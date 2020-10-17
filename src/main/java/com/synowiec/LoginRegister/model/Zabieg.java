@@ -18,6 +18,12 @@ public class Zabieg {
     public Zabieg() {
     }
 
+    public Zabieg(String name, @NotNull Pacjent pacjent, @NotNull Fizjoterapeuta fizjoterapeuta) {
+        this.name = name;
+        this.pacjent = pacjent;
+        this.fizjoterapeuta = fizjoterapeuta;
+    }
+
     @ManyToOne
     @NotNull
     @JoinColumn(name="pacjent_id", nullable = false)

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Wyszukaj</title>
+    <title>Znajdz fizjoterapeute</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <base href="/">
@@ -32,6 +32,9 @@
             <li>
                 <a th:href="@{/pacjent/wyszukaj}"><span class="fa fa-search"></span>&nbsp;&nbsp;Znajdz fizjoterapeute</a>
             </li>
+            <li>
+                <a th:href="@{/pacjent/wizyty}"><span class="fa fa-search"></span>&nbsp;&nbsp;Moje wizyty</a>
+            </li>
             <li sec:authorize="isAuthenticated()">
                 <a th:href="@{/pacjent/logout}"><span class="fa fa-sign-out"></span>&nbsp;&nbsp;Wyloguj</a>
             </li>
@@ -45,17 +48,17 @@
         <h1>Lista fizjoterapeutów</h1>
         <br/><br/>
         <form th:action="@{/pacjent/wyszukaj}">
-            Przeszukaj za pomocą słowa klucza: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+            Przeszukaj za pomocą słowa kluczowego: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
             &nbsp;
-            <input type="submit" value="Search" />
+            <input type="submit" value="Szukaj" />
         </form>
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -64,11 +67,9 @@
                 <td th:text="${fizjoterapeuta.lastName}">Last Name</td>
                 <td th:text="${fizjoterapeuta.email}">EMail</td>
 
-                <!--            <td>-->
-                <!--                <a th:href="/@{'/edit/' + ${product.id}}">Edit</a>-->
-                <!--                &nbsp;&nbsp;&nbsp;-->
-                <!--                <a th:href="/@{'/delete/' + ${product.id}}">Delete</a>-->
-                <!--            </td>-->
+                            <td>
+                                <a th:href="@{'/pacjent/zarejestruj2/'+ ${fizjoterapeuta.id}}">Zarejestruj wizytę</a>
+                        </td>
             </tr>
             </tbody>
         </table>

@@ -2,9 +2,11 @@ package com.synowiec.LoginRegister.web;
 
 import com.synowiec.LoginRegister.model.Fizjoterapeuta;
 import com.synowiec.LoginRegister.model.Pacjent;
+import com.synowiec.LoginRegister.model.Zabieg;
 import com.synowiec.LoginRegister.repository.FizjoterapeutaRepository;
 import com.synowiec.LoginRegister.service.FizjoterapeutaService;
 import com.synowiec.LoginRegister.service.PacjentService;
+import com.synowiec.LoginRegister.service.ZabiegService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,8 @@ public class MainController {
     FizjoterapeutaService fizjoterapeutaService;
     @Autowired
     PacjentService pacjentService;
+    @Autowired
+    private ZabiegService zabiegService;
 
     @GetMapping("/index")
     public String root() {
@@ -68,6 +72,30 @@ public class MainController {
         model.addAttribute("keyword", keyword);
         return "PacjentWyszukaj";
     }
+    @GetMapping("/pacjent/wizyty")
+    public String PacjentWizyty(Model model, Authentication auth){
+        List<Zabieg> listZabieg = zabiegService.listAll("pacjent", auth.getName());
+        model.addAttribute("listZabieg", listZabieg);
+        return "PacjentWizyty";
+    }
+    @RequestMapping("/pacjent/wizyty/{id}")
+    public ModelAndView showZabiegPage(@PathVariable(name = "id") long id) {
+        ModelAndView mav = new ModelAndView("PacjentZabieg");
+        Zabieg zabieg = zabiegService.get(id);
+        mav.addObject("zabieg", zabieg);
+        return mav;
+    }
+
+    @RequestMapping(value = "/ZabiegEdytuj", method = RequestMethod.POST)
+    public String editZabieg(@ModelAttribute("zabieg")@RequestBody Zabieg zabieg) {
+        zabiegService.updateZabieg(zabieg);
+        return "PacjentWizyty";
+    }
+    @RequestMapping(value = "/PacjentZabiegUsun")
+    public String deletePacjentZabieg(@ModelAttribute("zabieg")@RequestBody Zabieg zabieg) {
+        zabiegService.deleteZabieg(zabieg);
+        return "PacjentWizyty";
+    }
 
 
     @GetMapping("/fizjoterapeuta/login")
@@ -100,7 +128,23 @@ public class MainController {
         fizjoterapeutaService.updateFizjoterapeuta(fizjoterapeuta);
         return "FizjoterapeutaDashboard";
     }
-
-
+    @GetMapping("/fizjoterapeuta/wizyty")
+    public String FizjoterapeutaWizyty(Model model, Authentication auth){
+        List<Zabieg> listZabieg = zabiegService.listAll("fizjoterapeuta",auth.getName());
+        model.addAttribute("listZabieg", listZabieg);
+        return "FizjoterapeutaWizyty";
+    }
+    @RequestMapping("/fizjoterapeuta/wizyty/{id}")
+    public ModelAndView showZabiegFizjoPage(@PathVariable(name = "id") long id) {
+        ModelAndView mav = new ModelAndView("FizjoterapeutaZabieg");
+        Zabieg zabieg = zabiegService.get(id);
+        mav.addObject("zabieg", zabieg);
+        return mav;
+    }
+    @RequestMapping(value = "/FizjoterapeutaZabiegUsun")
+    public String deleteFizjoZabieg(@ModelAttribute("zabieg")@RequestBody Zabieg zabieg) {
+        zabiegService.deleteZabieg(zabieg);
+        return "FizjoterapeutaDashboard";
+    }
 
 }

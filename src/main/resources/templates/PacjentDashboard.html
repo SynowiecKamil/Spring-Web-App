@@ -32,6 +32,9 @@
             <li>
                 <a th:href="@{/pacjent/wyszukaj}"><span class="fa fa-search"></span>&nbsp;&nbsp;Znajdz fizjoterapeute</a>
             </li>
+            <li>
+                <a th:href="@{/pacjent/wizyty}"><span class="fa fa-search"></span>&nbsp;&nbsp;Moje wizyty</a>
+            </li>
             <li sec:authorize="isAuthenticated()">
                 <a th:href="@{/pacjent/logout}"><span class="fa fa-sign-out"></span>&nbsp;&nbsp;Wyloguj</a>
             </li>

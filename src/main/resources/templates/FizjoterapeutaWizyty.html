@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Moje konto</title>
+    <title>Moje wizyty</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <base href="/">
@@ -21,7 +21,7 @@
                 <span class="sr-only">Toggle Menu</span>
             </button>
         </div>
-        <h1><a class="logo"></a></h1>
+        <h1><a href="index.html" class="logo">Project Name</a></h1>
         <ul class="list-unstyled components mb-5">
             <li>
                 <a th:href="@{/fizjoterapeuta/dashboard}"><span class="fa fa-home mr-3"></span>Dashboard</a>
@@ -42,27 +42,22 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
         <div align="center">
-            <h1>Moje konto</h1>
+            <h1>Lista wizyt</h1>
             <br/><br/>
             <table border="1" cellpadding="10">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Imię</th>
-                    <th>Nazwisko</th>
-                    <th>Email</th>
+                    <th>Nazwa zabiegu</th>
+                    <th>Pacjent</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="fizjoterapeuta : ${getFizjoterapeuta}">
-                    <td th:text="${fizjoterapeuta.id}">ID</td>
-                    <td th:text="${fizjoterapeuta.firstName}">Imię</td>
-                    <td th:text="${fizjoterapeuta.lastName}">Nazwisko</td>
-                    <td th:text="${fizjoterapeuta.email}">EMail</td>
-
+                <tr th:each="zabieg : ${listZabieg}">
+                    <td th:text="${zabieg.name}">Nazwa zabiegu</td>
+                    <td th:text="${zabieg.pacjent.lastName}">Fizjoterapeuta</td>
                     <td>
-                        <a th:href="@{'/fizjoterapeuta/konto/edytuj/' + ${fizjoterapeuta.id}}">Edytuj dane</a>
+                        <a th:href="@{'/fizjoterapeuta/wizyty/'+ ${zabieg.id}}">Szczegóły</a>
                     </td>
                 </tr>
                 </tbody>

@@ -29,6 +29,9 @@
             <li>
                 <a th:href="@{/fizjoterapeuta/konto}"><span class="fa fa-user mr-3"></span>Moje konto</a>
             </li>
+            <li>
+                <a th:href="@{/fizjoterapeuta/wizyty}"><span class="fa fa-user mr-3"></span>Moje wizyty</a>
+            </li>
             <li sec:authorize="isAuthenticated()">
                 <a th:href="@{/fizjoterapeuta/logout}"><span class="fa fa-sign-out"></span>&nbsp;&nbsp;Wyloguj</a>
             </li>

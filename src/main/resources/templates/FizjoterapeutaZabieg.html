@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Moje konto</title>
+    <title>Zabieg</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <base href="/">
@@ -18,10 +18,10 @@
         <div class="custom-menu">
             <button type="button" id="sidebarCollapse" class="btn btn-primary">
                 <i class="fa fa-bars"></i>
-                <span class="sr-only">Toggle Menu</span>
+                <span class="sr-only" >Toggle Menu</span>
             </button>
         </div>
-        <h1><a class="logo"></a></h1>
+        <h1><a href="index.html" class="logo"></a></h1>
         <ul class="list-unstyled components mb-5">
             <li>
                 <a th:href="@{/fizjoterapeuta/dashboard}"><span class="fa fa-home mr-3"></span>Dashboard</a>
@@ -42,31 +42,42 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
         <div align="center">
-            <h1>Moje konto</h1>
-            <br/><br/>
-            <table border="1" cellpadding="10">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Imię</th>
-                    <th>Nazwisko</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="fizjoterapeuta : ${getFizjoterapeuta}">
-                    <td th:text="${fizjoterapeuta.id}">ID</td>
-                    <td th:text="${fizjoterapeuta.firstName}">Imię</td>
-                    <td th:text="${fizjoterapeuta.lastName}">Nazwisko</td>
-                    <td th:text="${fizjoterapeuta.email}">EMail</td>
+            <h1>Szczegóły zabiegu</h1>
+            <br />
 
-                    <td>
-                        <a th:href="@{'/fizjoterapeuta/konto/edytuj/' + ${fizjoterapeuta.id}}">Edytuj dane</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                <table border="0" cellpadding="10">
+                    <tr>
+                        <td>ID:</td>
+                        <td>
+                            <input type="text" th:field="*{zabieg.id}" readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nazwa:</td>
+                        <td>
+                            <input type="text" th:field="*{zabieg.name}" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Imie pacjenta:</td>
+                        <td>
+                            <input type="text" th:field="*{zabieg.pacjent.firstName}" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nazwisko Pacjenta:</td>
+                        <td>
+                            <input type="text" th:field="*{zabieg.pacjent.lastName}" readonly="readonly"/>
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+            <form action="#" th:action="@{/FizjoterapeutaZabiegUsun}" th:object="${zabieg}" method="post">
+                <input type="hidden" name="id" th:value="${id}">
+                <button type="submit">Odwołaj zabieg</button>
+            </form>
+            <a th:href="@{/fizjoterapeuta/wizyty}">Powrót</a>
         </div>
     </div>
 </div>

@@ -32,6 +32,9 @@
             <li>
                 <a th:href="@{/pacjent/wyszukaj}"><span class="fa fa-search"></span>&nbsp;&nbsp;Znajdz fizjoterapeute</a>
             </li>
+            <li>
+                <a th:href="@{/pacjent/wizyty}"><span class="fa fa-search"></span>&nbsp;&nbsp;Moje wizyty</a>
+            </li>
             <li sec:authorize="isAuthenticated()">
                 <a th:href="@{/pacjent/logout}"><span class="fa fa-sign-out"></span>&nbsp;&nbsp;Wyloguj</a>
             </li>
@@ -61,13 +64,13 @@
                     <!--                </td>-->
                     <!--            </tr>-->
                     <tr>
-                        <td>First Name:</td>
+                        <td>Imię:</td>
                         <td>
                             <input type="text" th:field="*{firstName}" />
                         </td>
                     </tr>
                     <tr>
-                        <td>Last Name:</td>
+                        <td>Nazwisko:</td>
                         <td><input type="text" th:field="*{lastName}" /></td>
                     </tr>
                     <!--            <tr>-->
@@ -77,7 +80,7 @@
                     <!--                </td>-->
                     <!--            </tr>-->
                     <tr>
-                        <td colspan="2"><button type="submit">Save</button> </td>
+                        <td colspan="2"><button type="submit">Zapisz zmiany</button> </td>
                     </tr>
                 </table>
             </form>
